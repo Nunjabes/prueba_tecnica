@@ -1,0 +1,84 @@
+# Importar librerias
+import os
+import pathlib
+import pandas as pd
+import csv
+
+# Declarar variables globales
+dir_path = 'data'
+ext_excel = '.xlsx'
+ext_csv = '.csv'
+salario = 28000
+
+# Funcion principal para la prueba tecnica
+def prueba_tecnica():
+    for file in os.listdir(dir_path):
+        # Obtener la extension del archivo
+        file_extension = pathlib.Path(file).suffix
+        # Lectura de archivos csv
+        if file_extension == ext_csv:
+            print('Leyendo archivos CSV...')
+            # Abrir el documento CSV con formato UTF-8
+            with open(dir_path + '/' + file, encoding = 'utf-8') as archivo:
+                # Leer el fichero CSV
+                csv_reader = csv.reader(archivo)
+                print(csv_reader)
+                # Leer todas las columnas del fichero CSV
+                for rows in csv_reader:
+                    columna_id_empleado = rows[0]
+                    columna_nombre = rows[1]
+                    columna_apellido1 = rows[2]
+                    columna_apellido2 = rows[3]
+                    columna_sexo = rows[4]
+                    columna_fecha_antiguedad = rows[5]
+                    columna_salario_bruto_anual = rows[6]
+                    columna_id_empresa = rows[7]
+                    columna_nombre_empresa = rows[8]
+                    columna_id_centro_trabajo = rows[9]
+                    columna_nombre_centro_trabajo = rows[10]
+
+                    try:
+                        columna_salario_bruto_anual_num = int(columna_salario_bruto_anual)
+                    except:
+                        columna_salario_bruto_anual_num = columna_salario_bruto_anual
+
+                    # Enunciado 1: Indicar cuantos hombre y mujeres hay del total de empleado.
+                    def enunciado_1():
+                        if columna_sexo == 'H':
+                            for h in columna_sexo:
+                                print(h)
+                            # print('Hombre:', columna_sexo)
+                        if columna_sexo == 'M':
+                            print('Mujer:', columna_sexo)
+
+                    # Enunciado 2: Indica la suma el salario bruto anual de los empleados de la empresa 1 (Equilibra IT)
+                    # y el centro de trabajo CT2 (Alovera).
+                   
+                    def enunciado_2():
+                        # total_salario = 0
+                        if columna_nombre_empresa == 'Equilibra IT' and columna_nombre_centro_trabajo == 'Alovera':
+                            if int(columna_salario_bruto_anual_num) > salario:
+                                # total_salario += columna_salario_bruto_anual
+                                print('Total de salario bruto anual:', columna_salario_bruto_anual_num)
+
+                    # Enunciado 3: Imprime un listado de empleados (id empleado, nombre, apellidos, salario y empresa)
+                    # de los empleados que cobren más de 28000 euros y que pertenezcan a la empresa 2 (Equilibra RRHH).
+
+                    def enunciado_3():
+                        empleados = []
+                        if int(columna_salario_bruto_anual_num) > salario and columna_nombre_empresa == 'Equilibrha RRHH':
+                            empleado = {'id': columna_id_empleado, 'nombre': columna_nombre, 'apellido1': columna_apellido1, 'apellido2': columna_apellido2, 'salario': columna_salario_bruto_anual, 'empresa': columna_nombre_empresa}
+                            empleados.append(empleado)
+                        for empleado in empleados:
+                            print('Empleado:', empleado['id'], empleado['nombre'], empleado['apellido1'], empleado['apellido2'], 'Salario:', empleado['salario'], 'Empresa:', empleado['empresa'])
+
+                    # Ejecutar los ejercicios
+                    enunciado_1()
+                    enunciado_2()
+                    enunciado_3()
+
+        # Lectura de archivos xlsx
+        if file_extension == ext_excel:
+            df = pd.read_excel(dir_path + '/' + file)
+
+prueba_tecnica()
